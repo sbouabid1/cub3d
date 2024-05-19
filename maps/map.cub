@@ -1,18 +1,22 @@
-NO ./textures/greystone.xpm
+
+F 122,122,0
+C 255,200,160
+
+
 SO ./textures/redbrick.xpm
 EA ./textures/wood.xpm
 WE ./textures/wood.xpm
+NO ./textures/greystone.xpm
 
-C 255,200,160
-F 122,122,122
+
 
       1
-     101
-    10001
-   1000001
+     11111
+    1010011111
+   100000111
   111111111
  10000000001111111
-100100E000000000001
+100100E00000000001
  10000000001111111
   100000111
    100001

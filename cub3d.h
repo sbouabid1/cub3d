@@ -6,7 +6,7 @@
 /*   By: sbouabid <sbouabid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:42:54 by sbouabid          #+#    #+#             */
-/*   Updated: 2024/05/19 10:56:58 by sbouabid         ###   ########.fr       */
+/*   Updated: 2024/05/19 15:20:49 by sbouabid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,11 @@ void	ft_puterror(char *msg);
 void	check_map_name(char *name);
 void	start_parsing(char *name_file, t_cub3d *cub3d);
 int		parsing_map_values(char *line, t_temp *temp, t_cub3d *cub3d);
-int		pars_color(char	*line, t_temp *temp);
-void	draw_map(t_cub3d *cub, t_map *map);
-void	full_map(char *line, t_map **map, t_temp *temp);
+int		pars_color(char	**lines, t_temp *temp);
+void	draw_map(t_cub3d *cub, t_map **map);
+void	full_map(char *line, t_map **map, t_temp *temp, t_cub3d *cub);
 void	check_if_valid_map(t_cub3d *cub);
+void	free_cub(t_cub3d *cub);
 
 t_map	*list_create(char	*line);
 void	list_add(t_map **head, t_map *node);

@@ -6,7 +6,7 @@
 /*   By: sbouabid <sbouabid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:58:42 by sbouabid          #+#    #+#             */
-/*   Updated: 2024/05/19 11:27:26 by sbouabid         ###   ########.fr       */
+/*   Updated: 2024/05/19 15:50:38 by sbouabid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	check_first_and_last(t_cub3d *cub)
 	while (cub->map[0][i])
 	{
 		if (cub->map[0][i] != ' ' && cub->map[0][i] != '1')
+		{
+			free_cub(cub);
 			ft_puterror("check_for_map::invalid map");
+		}
 		i++;
 	}
 	j = size_arr(cub->map);
@@ -29,12 +32,15 @@ void	check_first_and_last(t_cub3d *cub)
 	while (cub->map[j - 1][i])
 	{
 		if (cub->map[j - 1][i] != ' ' && cub->map[j - 1][i] != '1')
+		{
+			free_cub(cub);
 			ft_puterror("check_for_map::invalid map");
+		}
 		i++;
 	}
 }
 
-void	check_player(char **map)
+int	check_player(char **map)
 {
 	t_temp	temp;
 
@@ -57,17 +63,18 @@ void	check_player(char **map)
 		temp.i++;
 	}
 	if (temp.N > 1 || temp.S > 1 || temp.E > 1 || temp.W > 1)
-		ft_puterror("check_for_map::invalid map");
+		return (1);
 	if (temp.N == 1 && (temp.S == 1 || temp.E == 1 || temp.W == 1))
-		ft_puterror("check_for_map::invalid map");
+		return (1);
 	if (temp.S == 1 && (temp.E == 1 || temp.E == 1 || temp.N == 1))
-		ft_puterror("check_for_map::invalid map");
+		return (1);
 	if (temp.E == 1 && (temp.S == 1 || temp.N == 1 || temp.W == 1))
-		ft_puterror("check_for_map::invalid map");
+		return (1);
 	if (temp.W == 1 && (temp.S == 1 || temp.N == 1 || temp.E == 1))
-		ft_puterror("check_for_map::invalid map");
+		return (1);
 	if (temp.W == 0 && temp.S == 0 && temp.N == 0 && temp.E == 0)
-		ft_puterror("check_for_map::invalid map need a player");
+		return (1);
+	return (0);
 }
 
 void	check_if_valid_map(t_cub3d *cub)
@@ -77,8 +84,15 @@ void	check_if_valid_map(t_cub3d *cub)
 	int	valid;
 
 	if (size_arr(cub->map) < 3)
+	{
+		free_cub(cub);
 		ft_puterror("check_for_map::invalid map");
-	check_player(cub->map);
+	}
+	if (check_player(cub->map) == 1)
+	{
+		free_cub(cub);
+		ft_puterror("check_for_map::invalid map");
+	}
 	check_first_and_last(cub);
 	i = 1;
 	while (cub->map[i + 1] != NULL)
@@ -91,14 +105,17 @@ void	check_if_valid_map(t_cub3d *cub)
 				j++;
 			else
 			{
-				if (j > 0 && (cub->map[i][j - 1] == ' ' || cub->map[i][j + 1] == '\0'))
+				if (j > 0 && (cub->map[i][j - 1] == ' ' || cub->map[i][j + 1] == ' ' || cub->map[i][j + 1] == '\0' ))
 					valid = 0;
 				if (j == 0 && cub->map[i][j + 1] == '\0')
 					valid = 0;
 				if (cub->map[i + 1][j] == ' ' || cub->map[i - 1][j] == ' ' || cub->map[i + 1][j] == '\0' || cub->map[i - 1][j] == '\0'  )
 					valid = 0;
 				if (!valid)
+				{
+					free_cub(cub);
 					ft_puterror("check_for_map::invalid map");
+				}
 				j++;
 			}
 		}

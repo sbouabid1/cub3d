@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 # CFLAGS = -g -fsanitize=address
 SRCF = main.c ./src/utils.c ./src/start_parsing.c ./src/parsing_map_name.c ./src/parsing_map_color.c \
 		./src/parsing_map_values.c ./src/list.c ./src/parsing_map.c
@@ -21,6 +21,6 @@ $(NAME): $(OBJF) $(LIBFT_OBJF) $(GNL_OBJF)
 
 
 clean:
-	$(RM) $(OBJF) $(LIBFT_OBJF)
+	$(RM) $(OBJF) $(LIBFT_OBJF) $(GNL_OBJF)
 fclean: clean
 	$(RM) $(NAME)

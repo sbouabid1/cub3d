@@ -6,29 +6,40 @@
 /*   By: sbouabid <sbouabid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:17:59 by sbouabid          #+#    #+#             */
-/*   Updated: 2024/05/19 11:11:48 by sbouabid         ###   ########.fr       */
+/*   Updated: 2024/05/19 15:21:14 by sbouabid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	draw_map(t_cub3d *cub, t_map *map)
+void	free_cub(t_cub3d *cub)
+{
+	free(cub->NO);
+	free(cub->SO);
+	free(cub->WE);
+	free(cub->EA);
+	free_arr(cub->map);
+}
+void draw_map(t_cub3d *cub, t_map **map)
 {
 	int	i;
 	int	size;
+	t_map	*current;
 
 	i = 0;
-	size = list_size(map);
+	size = list_size(*map);
 	cub->map = malloc((size + 1) * sizeof(char *));
 	if (!cub->map)
-		return ;
-	while (i < size && map != NULL)
+		return;
+	current = *map;
+	while (i < size && current != NULL)
 	{
-		cub->map[i] = ft_strtrim(map->line, "\n");
-		map = map->next;
+		cub->map[i] = ft_strtrim(current->line, "\n");
+		current = current->next;
 		i++;
 	}
 	cub->map[i] = NULL;
+	list_clean(map);
 }
 
 int	check_if_empty(char	*line)
@@ -65,12 +76,20 @@ int	check_if_valid(char	*line, t_temp *temp)
 	return (0);
 }
 
-void	full_map(char *line, t_map **map, t_temp *temp)
+void	full_map(char *line, t_map **map, t_temp *temp, t_cub3d *cub)
 {
 	if (temp->C != 1 || temp->EA != 1 || temp->F != 1 || temp->NO != 1 || temp ->SO != 1 || temp->WE != 1)
+	{
+		free(line);
+		free_cub(cub);
 		ft_puterror("check_for_vars::vars missing in the file");
+	}
 	if (check_if_valid(line, temp) == 1)
+	{
+		free(line);
+		free_cub(cub);
 		ft_puterror("check_for_map::invalid map");
+	}
 	if(check_if_empty(line) == 0)
 		list_add(map, list_create(line));
 }
@@ -78,7 +97,6 @@ void	full_map(char *line, t_map **map, t_temp *temp)
 int	parsing_map_values(char *line, t_temp *temp, t_cub3d *cub3d)
 {
 	char	**new;
-
 
 	if (line[0] == '\n' && temp->find_map == 1)
 		return (1);
@@ -90,10 +108,7 @@ int	parsing_map_values(char *line, t_temp *temp, t_cub3d *cub3d)
 	if (new == NULL)
 		return 0;
 	if (size_arr(new) != 2 && new[0][0] != '1')
-	{
-		free_arr(new);
-		ft_puterror("check_for_map::invalid map");
-	}
+		return(free(line),free_arr(new),ft_puterror("check_for_map::invalid map"), -1);
 	if (ft_strcmp(new[0], "NO") == 0)
 	{
 		temp->NO += 1;
@@ -117,12 +132,12 @@ int	parsing_map_values(char *line, t_temp *temp, t_cub3d *cub3d)
 	else if (ft_strcmp(new[0], "F") == 0)
 	{
 		temp->F += 1;
-		cub3d->F = pars_color(new[1], temp);
+		cub3d->F = pars_color(new, temp);
 	}
 	else if (ft_strcmp(new[0], "C") == 0)
 	{
 		temp->C += 1;
-		cub3d->C = pars_color(new[1], temp);
+		cub3d->C = pars_color(new, temp);
 	}
 	else if (new[0][0] == '1')
 		temp->find_map = 1;

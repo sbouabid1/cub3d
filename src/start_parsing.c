@@ -6,7 +6,7 @@
 /*   By: sbouabid <sbouabid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:04:01 by sbouabid          #+#    #+#             */
-/*   Updated: 2024/05/18 17:58:18 by sbouabid         ###   ########.fr       */
+/*   Updated: 2024/05/19 14:45:26 by sbouabid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,16 @@ void	start_parsing(char *name_file, t_cub3d *cub3d)
 	while (line)
 	{
 		if (parsing_map_values(line, &temp, cub3d) == 1)
-			full_map(line, &map, &temp);
+			full_map(line, &map, &temp, cub3d);
 		free(line);
 		line = get_next_line(fd);
 	}
+	close(fd);
 	if (temp.find_map == 0)
+	{
+		free_cub(cub3d);
 		ft_puterror("check_for_vars::vars missing in the file");
-	draw_map(cub3d, map);
+	}
+	draw_map(cub3d, &map);
 	check_if_valid_map(cub3d);
 }
