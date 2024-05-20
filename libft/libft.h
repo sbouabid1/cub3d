@@ -6,14 +6,14 @@
 /*   By: sbouabid <sbouabid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:11:35 by sbouabid          #+#    #+#             */
-/*   Updated: 2024/05/18 16:37:14 by sbouabid         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:01:55 by sbouabid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
-#define LIBFT_H
+# define LIBFT_H
 
-#include <stdlib.h>
+# include <stdlib.h>
 
 char	*ft_strtrim(char const *s1, char const *set);
 int		ft_strlen(const char *s);

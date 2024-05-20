@@ -6,13 +6,13 @@
 /*   By: sbouabid <sbouabid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:39:27 by sbouabid          #+#    #+#             */
-/*   Updated: 2024/05/19 15:59:10 by sbouabid         ###   ########.fr       */
+/*   Updated: 2024/05/20 10:06:08 by sbouabid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	convert_and_check_range(char **color_values, int *color, char **lines, char **new)
+int	convert(char **color_values, int *color, char **lines)
 {
 	int	r;
 	int	g;
@@ -23,7 +23,7 @@ int	convert_and_check_range(char **color_values, int *color, char **lines, char 
 	b = ft_atoi(color_values[2]);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
-		free_arr(new);
+		free_arr(color_values);
 		free_arr(lines);
 		ft_puterror("check_c_var::invalid color");
 	}
@@ -31,6 +31,18 @@ int	convert_and_check_range(char **color_values, int *color, char **lines, char 
 	return (0);
 }
 
+void	temp_pars_color(char **new, char **lines, int *color, char *temper)
+{
+	if (size_arr(new) != 3)
+	{
+		free_arr(new);
+		free_arr(lines);
+		ft_puterror("check_c_var::invalid color");
+	}
+	convert(new, color, lines);
+	free(temper);
+	free_arr(new);
+}
 
 int	pars_color(char	**lines, t_temp *temp)
 {
@@ -54,15 +66,7 @@ int	pars_color(char	**lines, t_temp *temp)
 	temper = ft_strtrim(lines[1], "\n");
 	new = ft_split(temper, ',');
 	if (!new)
-		return 0;
-	if (size_arr(new) != 3)
-	{
-		free_arr(new);
-		free_arr(lines);
-		ft_puterror("check_c_var::invalid color");
-	}
-	convert_and_check_range(new, &color, lines, new);
-	free(temper);
-	free_arr(new);
+		return (0);
+	temp_pars_color(new, lines, &color, temper);
 	return (color);
 }

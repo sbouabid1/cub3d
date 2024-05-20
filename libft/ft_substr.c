@@ -6,7 +6,7 @@
 /*   By: sbouabid <sbouabid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:54:33 by sbouabid          #+#    #+#             */
-/*   Updated: 2024/05/13 17:43:45 by sbouabid         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:01:36 by sbouabid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*temp(char *ptr)
 char	*ft_substr(char const *s, int start, int len)
 {
 	char	*ptr;
-	int	i;
+	int		i;
 
 	i = 0;
 	ptr = NULL;

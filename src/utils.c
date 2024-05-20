@@ -6,7 +6,7 @@
 /*   By: sbouabid <sbouabid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:41:38 by sbouabid          #+#    #+#             */
-/*   Updated: 2024/05/19 15:07:40 by sbouabid         ###   ########.fr       */
+/*   Updated: 2024/05/19 19:03:40 by sbouabid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,13 @@ int	size_arr(char **arr)
 		i++;
 	}
 	return (i);
+}
+
+void	free_cub(t_cub3d *cub)
+{
+	free(cub->no);
+	free(cub->so);
+	free(cub->we);
+	free(cub->ea);
+	free_arr(cub->map);
 }

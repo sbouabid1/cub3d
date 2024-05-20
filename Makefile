@@ -2,7 +2,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 # CFLAGS = -g -fsanitize=address
 SRCF = main.c ./src/utils.c ./src/start_parsing.c ./src/parsing_map_name.c ./src/parsing_map_color.c \
-		./src/parsing_map_values.c ./src/list.c ./src/parsing_map.c
+		./src/parsing_map_values.c ./src/list.c ./src/parsing_map.c ./src/parsing_map_utils.c
 LIBFT =	./libft/ft_strtrim.c ./libft/ft_strlen.c ./libft/ft_substr.c ./libft/ft_split.c\
 		 ./libft/ft_strcmp.c ./libft/ft_memset.c ./libft/ft_atoi.c ./libft/ft_strdup.c
 GNL = ./gnl/get_next_line.c ./gnl/get_next_line_utils.c

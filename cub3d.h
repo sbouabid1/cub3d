@@ -6,52 +6,50 @@
 /*   By: sbouabid <sbouabid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:42:54 by sbouabid          #+#    #+#             */
-/*   Updated: 2024/05/19 15:20:49 by sbouabid         ###   ########.fr       */
+/*   Updated: 2024/05/20 09:55:22 by sbouabid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
-#define CUB3D_H
+# define CUB3D_H
 
-#include "gnl/get_next_line.h"
-#include "libft/libft.h"
-#include <stdio.h>
+# include "gnl/get_next_line.h"
+# include "libft/libft.h"
+# include <stdio.h>
 
-typedef	struct s_temp
+typedef struct s_temp
 {
-	int	NO;
-	int	SO;
-	int	WE;
-	int	EA;
-	int	F;
-	int	C;
+	int	no;
+	int	so;
+	int	we;
+	int	ea;
+	int	f;
+	int	c;
 	int	i;
 	int	j;
-	int	N;
-	int	S;
-	int	E;
-	int	W;
+	int	n;
+	int	s;
+	int	e;
+	int	w;
 	int	find_map;
 	int	find_new_line;
 }	t_temp;
 
-typedef	struct s_map
+typedef struct s_map
 {
-	char	*line;
-	struct	s_map *next;
+	char			*line;
+	struct s_map	*next;
 }	t_map;
 
-
-
-typedef	struct s_cub3d
+typedef struct s_cub3d
 {
 	char	**map;
-	char	*NO;
-	char	*SO;
-	char	*WE;
-	char	*EA;
-	int		F;
-	int		C;
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	int		f;
+	int		c;
 }	t_cub3d;
 
 void	free_arr(char **values);
@@ -65,6 +63,9 @@ void	draw_map(t_cub3d *cub, t_map **map);
 void	full_map(char *line, t_map **map, t_temp *temp, t_cub3d *cub);
 void	check_if_valid_map(t_cub3d *cub);
 void	free_cub(t_cub3d *cub);
+void	free_cub(t_cub3d *cub);
+int		check_if_empty(char	*line);
+int		check_if_valid(char	*line, t_temp *temp);
 
 t_map	*list_create(char	*line);
 void	list_add(t_map **head, t_map *node);

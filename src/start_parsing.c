@@ -6,11 +6,20 @@
 /*   By: sbouabid <sbouabid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:04:01 by sbouabid          #+#    #+#             */
-/*   Updated: 2024/05/19 14:45:26 by sbouabid         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:04:45 by sbouabid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+void	start_temp(t_temp *temp, t_cub3d *cub)
+{
+	if (temp->find_map == 0)
+	{
+		free_cub(cub);
+		ft_puterror("check_for_vars::vars missing in the file");
+	}
+}
 
 void	start_parsing(char *name_file, t_cub3d *cub3d)
 {
@@ -34,11 +43,7 @@ void	start_parsing(char *name_file, t_cub3d *cub3d)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	if (temp.find_map == 0)
-	{
-		free_cub(cub3d);
-		ft_puterror("check_for_vars::vars missing in the file");
-	}
+	start_temp(&temp, cub3d);
 	draw_map(cub3d, &map);
 	check_if_valid_map(cub3d);
 }
