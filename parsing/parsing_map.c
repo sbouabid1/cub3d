@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../include/header.h"
 
 void	check_first_and_last(t_cub3d *cub)
 {

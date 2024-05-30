@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbouabid <sbouabid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: touahman <touahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/16 15:44:16 by sbouabid          #+#    #+#             */
-/*   Updated: 2024/05/19 16:43:51 by sbouabid         ###   ########.fr       */
+/*   Created: 2024/05/22 17:15:52 by touahman          #+#    #+#             */
+/*   Updated: 2024/05/29 17:02:28 by touahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../include/header.h"
 
 int	main(int ac, char **av)
 {
-	t_cub3d	cub;
+	t_cub3d	cub3d;
 
-	cub.ea = NULL;
-	cub.no = NULL;
-	cub.so = NULL;
-	cub.we = NULL;
-	cub.map = NULL;
+	cub3d.ea = NULL;
+	cub3d.no = NULL;
+	cub3d.so = NULL;
+	cub3d.we = NULL;
+	cub3d.map = NULL;
 	if (ac != 2)
 	{
 		ft_puterror("one file must be provided with <.cub> extension");
 	}
-	start_parsing(av[1], &cub);
-	free_cub(&cub);
+	start_parsing(av[1], &cub3d);
+	start_gaming(&cub3d);
 }

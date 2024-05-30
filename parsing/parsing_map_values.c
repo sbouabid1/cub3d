@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../include/header.h"
 
 void	full_map(char *line, t_map **map, t_temp *temp, t_cub3d *cub)
 {

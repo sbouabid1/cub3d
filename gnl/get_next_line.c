@@ -3,78 +3,88 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbouabid <sbouabid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: touahman <touahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/17 10:21:02 by sbouabid          #+#    #+#             */
-/*   Updated: 2024/05/18 16:34:10 by sbouabid         ###   ########.fr       */
+/*   Created: 2023/11/16 12:20:31 by touahman          #+#    #+#             */
+/*   Updated: 2024/05/04 16:35:56 by touahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*read_buffer(int fd, char *tmp)
+char	*rest_of_line(char *reiner)
 {
-	int		read_counter;
-	char	*buffer;
+	char	*new_reiner;
+	int		i;
 
-	buffer = (char *)malloc(BUFFER_SIZE + 1);
-	if (!buffer)
-		return (NULL);
-	read_counter = 1;
-	while (read_counter && !ft__strchr(tmp, '\n'))
-	{
-		read_counter = read(fd, buffer, BUFFER_SIZE);
-		if (read_counter <= 0)
-			break ;
-		buffer[read_counter] = '\0';
-		tmp = ft__strjoin(tmp, buffer);
-	}
-	return (free(buffer), tmp);
+	i = 0;
+	while (reiner[i] && reiner[i] != '\n')
+		i++;
+	new_reiner = et_substr(reiner, i + 1, ft_strlen(reiner) - i);
+	free(reiner);
+	return (new_reiner);
 }
 
-char	*read_line(char *tmp)
+char	*extract_line(char *reiner, char *line)
 {
-	char	*line;
-	int		len;
+	int	i;
 
-	len = 0;
-	if (!tmp || !*tmp)
+	i = 0;
+	if (reiner[0] == '\0')
 		return (NULL);
-	while (tmp[len] && tmp[len] != '\n')
-		len++;
-	line = ft__substr(tmp, len);
+	if (ft_strchr(reiner, '\n') == NULL)
+	{
+		line = et_substr(reiner, 0, ft_strlen(reiner));
+	}
+	else
+	{
+		while (reiner[i] && reiner[i] != '\n')
+			i++;
+		line = et_substr(reiner, 0, i + 1);
+	}
 	return (line);
 }
 
-char	*next_line(char	*tmp)
+char	*read_line(int fd, char *reiner, char *buffer)
 {
-	char	*buffer;
+	char	*temp;
 	int		i;
 
-	if (!tmp || !*tmp)
-		return (NULL);
-	i = 0;
-	while (tmp[i] && tmp[i] != '\n')
-		i++;
-	if (!tmp[i])
-		buffer = ft__strdup(tmp + i);
-	else
-		buffer = ft__strdup(tmp + (i + 1));
-	return (free(tmp), tmp = NULL, buffer);
+	i = 1;
+	if (!reiner)
+		reiner = ft_strdup("");
+	while (reiner && i > 0 && !ft_strchr(reiner, '\n'))
+	{
+		i = read(fd, buffer, BUFFER_SIZE);
+		if (i == -1)
+			return (free(reiner), reiner = NULL, NULL);
+		buffer[i] = '\0';
+		temp = reiner;
+		reiner = ft_strjoin(temp, buffer);
+		free(temp);
+		temp = NULL;
+	}
+	return (free(buffer), buffer = NULL, reiner);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*tmp;
+	char		*buffer;
+	static char	*reiner;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0
-		|| BUFFER_SIZE >= 2147483647)
-		return (free(tmp), tmp = NULL, NULL);
-	tmp = read_buffer(fd, tmp);
-	line = read_line(tmp);
+	line = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+		return (free(reiner), reiner = NULL, NULL);
+	buffer = malloc((size_t)BUFFER_SIZE + 1);
+	if (!buffer)
+		return (free(reiner), reiner = NULL, NULL);
+	reiner = read_line(fd, reiner, buffer);
+	if (!reiner)
+		return (free(reiner), reiner = NULL, NULL);
+	line = extract_line(reiner, line);
 	if (!line)
-		return (free(tmp), tmp = NULL, NULL);
-	tmp = next_line(tmp);
+		return (free(reiner), reiner = NULL, NULL);
+	reiner = rest_of_line(reiner);
 	return (line);
 }

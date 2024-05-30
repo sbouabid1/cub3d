@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../include/header.h"
 
 void	draw_map(t_cub3d *cub, t_map **map)
 {

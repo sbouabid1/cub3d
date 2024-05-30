@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../include/header.h"
 
 int	help_check_map(char *name, char *target)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../include/header.h"
 
 int	convert(char **color_values, int *color, char **lines)
 {
@@ -27,7 +27,10 @@ int	convert(char **color_values, int *color, char **lines)
 		free_arr(lines);
 		ft_puterror("check_c_var::invalid color");
 	}
-	*color = (r << 16) + (g << 8) + b;
+	*color = (r << 24);
+	*color |= (g << 16);
+	*color |= (b << 8);
+	*color |= (255 << 0);
 	return (0);
 }
 
